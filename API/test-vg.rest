@@ -1,0 +1,63 @@
+@hostname = localhost
+@port = 5001
+@host = {{hostname}}:{{port}}
+
+### Register a new Film Studio
+POST http://{{host}}/api/filmstudio/register
+Content-Type: application/json
+
+{
+  "Name": "Test Studio",
+  "City": "Cairo",
+  "Username": "teststudio",
+  "Password": "Test@1234"
+}
+
+### Register a user (Admin)
+POST http://{{host}}/api/users/register
+Content-Type: application/json
+
+{
+  "Username": "admin",
+  "Password": "Admin@123",
+  "IsAdmin": true
+}
+
+### Authenticate Film Studio
+POST http://{{host}}/api/users/authenticate
+Content-Type: application/json
+
+{
+  "Username": "demostudio",
+  "Password": "Studio@123"
+}
+
+### Authenticate User (Admin)
+POST http://{{host}}/api/users/authenticate
+Content-Type: application/json
+
+{
+  "Username": "admin",
+  "Password": "Admin@123"
+}
+
+### Get all films (no authentication)
+GET http://{{host}}/api/films
+
+### Get details of a specific film (no authentication)
+GET http://{{host}}/api/films/1
+
+### Get all film studios (no authentication)
+GET http://{{host}}/api/filmstudio
+
+### Get all film studios (Admin)
+GET http://{{host}}/api/filmstudio
+Authorization: Bearer {{adminToken}}
+
+### Get details of a specific film studio (for users or the studio itself)
+GET http://{{host}}/api/filmstudio/1
+Authorization: Bearer {{token}}
+
+### Logout
+POST http://{{host}}/api/users/logout
+Authorization: Bearer {{token}}
